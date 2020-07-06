@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   Button,
@@ -18,6 +18,9 @@ import { v4 as uuidv4 } from 'uuid';
 import Environment from '../config/environment';
 import firebase from '../config/firebase';
 
+var googleResArr = [];
+exports.googleResArr = googleResArr;
+
 export default class Analyze extends React.Component {
   state = {
     image: null,
@@ -33,31 +36,32 @@ export default class Analyze extends React.Component {
   render() {
     let { image } = this.state;
 
+    // useEffect(() => console.log(googleResArr));
+
     return (
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      >
-        <View style={styles.helpContainer}>
-          <TouchableOpacity onPress={this._takePhoto} style={styles.cameraButton}>
-            <Text style={{ fontSize: 25 }}>Take a photo</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={this._pickImage} style={styles.cameraRollButton}>
-            <Text style={{ fontSize: 25 }}>Pick from Camera Roll</Text>
-          </TouchableOpacity>
-          {this.state.googleResponse && (
-            <FlatList
-              data={this.state.googleResponse.responses[0].labelAnnotations}
-              extraData={this.state}
-              keyExtractor={this._keyExtractor}
-              renderItem={({ item }) => <Text>{item.description}</Text>}
-            />
-          )}
-          {this.state.googleResponse &&
-            (console.log("here\n" + this.state.googleResponse.responses[0]))}
-          {this._maybeRenderImage()}
-        </View>
-      </ScrollView>
+      <View style={styles.helpContainer}>
+        <TouchableOpacity onPress={this._takePhoto} style={styles.cameraButton}>
+          <Text style={{ fontSize: 25 }}>Take a photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this._pickImage} style={styles.cameraRollButton}>
+          <Text style={{ fontSize: 25 }}>Pick from Camera Roll</Text>
+        </TouchableOpacity>
+        {this.state.googleResponse && (
+          <FlatList
+            data={this.state.googleResponse.responses[0].labelAnnotations}
+            extraData={this.state}
+            keyExtractor={this._keyExtractor}
+            renderItem={({ item }) => {
+              console.log(item.description);
+              googleResArr.push(item.description);
+            }}
+          />
+        )}
+        {
+          googleResArr.length != 0 ? console.log("googleResArr") : console.log("googleResArr is empty!")
+        }
+        {this._maybeRenderImage()}
+      </View>
     );
   }
 
