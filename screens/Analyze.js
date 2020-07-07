@@ -19,6 +19,7 @@ import Environment from '../config/environment';
 import firebase from '../config/firebase';
 
 var googleResArr = [];
+
 exports.googleResArr = googleResArr;
 
 export default class Analyze extends React.Component {
@@ -52,13 +53,13 @@ export default class Analyze extends React.Component {
             extraData={this.state}
             keyExtractor={this._keyExtractor}
             renderItem={({ item }) => {
-              console.log(item.description);
               googleResArr.push(item.description);
+              console.log(item.description);
             }}
           />
         )}
         {
-          googleResArr.length != 0 ? console.log("googleResArr") : console.log("googleResArr is empty!")
+          googleResArr.length != 0 ? console.log("googleResArr is not empty.") : console.log("googleResArr is empty!")
         }
         {this._maybeRenderImage()}
       </View>
@@ -92,7 +93,10 @@ export default class Analyze extends React.Component {
       >
         <Button
           style={{ marginBottom: 10 }}
-          onPress={() => this.submitToGoogle()}
+          onPress={() => {
+            this.submitToGoogle();
+            googleResArr.splice(0, googleResArr.length);
+          }}
           title="Analyze!"
         />
 

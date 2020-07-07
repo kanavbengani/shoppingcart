@@ -16,15 +16,16 @@ import {
 import { Header } from "react-native/Libraries/NewAppScreen";
 import TodoItem from "../components/todoItem";
 import AddTodo from "../components/addTodo";
+import googleResArr from './Analyze';
 // import { TouchableOpacity } from "react-native-gesture-handler";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 const screenHeight = Math.round(Dimensions.get("window").height);
 
-var googleResArr = [require('./Analyze').arr];
+var googleResponse = require('./Analyze').googleResArr;
 var todoArr = [];
 export default function UI({ navigation }) {
-    const pressHandlerDelete = () => {
+    const goToAnalyze = () => {
         navigation.push("Analyze");
     };
 
@@ -57,7 +58,7 @@ export default function UI({ navigation }) {
         }
     };
 
-    useEffect(() => console.log(googleResArr));
+    useEffect(() => console.log(todoArr));
 
     return (
         <TouchableWithoutFeedback
@@ -69,7 +70,7 @@ export default function UI({ navigation }) {
                 <ScrollView keyboardShouldPersistTaps={"handled"}>
                     <View style={styles.content}>
                         {
-                            googleResArr.length != 0 ? console.log("googleResArr is not empty.") : console.log("googleResArr is empty.")
+                            googleResponse.length != 0 ? console.log("googleResponse has the following contents: \n" + googleResponse) : console.log("googleResponse is empty.")
                         }
                         <AddTodo submitHandler={submitHandler} />
                         <View style={styles.list}>
@@ -84,7 +85,7 @@ export default function UI({ navigation }) {
                     </View>
                     <View style={styles.button}>
                         <TouchableOpacity
-                            onPress={pressHandlerDelete}
+                            onPress={goToAnalyze}
                             style={{
                                 backgroundColor: "maroon",
                                 justifyContent: "center",
