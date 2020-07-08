@@ -23,18 +23,27 @@ var todoArrMatch = require('./UI').todoArr;
 
 export default function UI({ navigation }) {
 
+    const goToHome = () => {
+        navigation.popToTop();
+    };
+
     return (
         <View style={styles.container}>
-            <ScrollView>
-                <View style={styles.list}>
-                    <FlatList
-                        data={todoArrMatch}
-                        renderItem={({ item, index }) =>
-                            <RenderItemMatch item={item} index={index} />
-                        }
-                    />
-                </View>
-            </ScrollView>
+            <View style={styles.list}>
+                <FlatList
+                    data={todoArrMatch}
+                    renderItem={({ item, index }) =>
+                        <RenderItemMatch item={item} index={index} />
+                    }
+                />
+
+            </View>
+            <TouchableOpacity style={styles.button} onPress={goToHome}>
+                <Text style={{ color: 'white' }}>Go Back to Home!</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Text>Testing</Text>
+            </TouchableOpacity>
         </View>
     );
 
@@ -46,8 +55,8 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         backgroundColor: "#fff",
         alignItems: "center",
-        justifyContent: "center",
         backgroundColor: "white",
+        justifyContent: "space-around"
     },
     item: {
         padding: 16,
@@ -71,10 +80,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     button: {
-        flex: 1,
-        justifyContent: "center",
-        marginLeft: (screenWidth - 200) / 2,
-        marginRight: (screenWidth - 200) / 2,
-        marginTop: 50,
+        borderColor: 'maroon',
+        borderWidth: 2,
+        borderRadius: 10,
+        height: 50,
+        width: screenWidth / 2,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'maroon',
     },
 });

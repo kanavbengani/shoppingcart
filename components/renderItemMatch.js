@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 export default function RenderItemMatch({ item, index }) {
 
@@ -11,7 +10,7 @@ export default function RenderItemMatch({ item, index }) {
                 <View style={styles.item}>
                     <Text>{item}</Text>
                     {
-                        check({ item }, googleResMatch) == true ? <Text>Hello</Text> : console.log("Bye")
+                        check({ item }, googleResMatch) == true ? <Image source={require('../assets/Checkmark.png')} style={{ width: 25, height: 25 }} /> : console.log("Bye")
                     }
 
                 </View>
@@ -19,13 +18,14 @@ export default function RenderItemMatch({ item, index }) {
                 console.log("It's a key.")
             }
         </View>
+
     );
 
 }
 
 function check(item, googleResMatch) {
-    for (let match = 0; match < googleResMatch.length; match++) {
-        if (item == googleResMatch[match]) {
+    for (let match = 0; match < googleResMatch['googleResArr'].length; match++) {
+        if (googleResMatch['googleResArr'][match].includes(item.item) == true) {  //item.item == googleResMatch[name][match]
             return true;
         }
     }
