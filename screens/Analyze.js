@@ -17,12 +17,13 @@ import * as Permissions from 'expo-permissions';
 import { v4 as uuidv4 } from 'uuid';
 import Environment from '../config/environment';
 import firebase from '../config/firebase';
+import { withNavigation } from 'react-navigation';
 
 var googleResArr = [];
 
 exports.googleResArr = googleResArr;
 
-export default class Analyze extends React.Component {
+class Analyze extends React.Component {
   state = {
     image: null,
     uploading: false,
@@ -36,8 +37,6 @@ export default class Analyze extends React.Component {
 
   render() {
     let { image } = this.state;
-
-    // useEffect(() => console.log(googleResArr));
 
     return (
       <View style={styles.helpContainer}>
@@ -96,6 +95,7 @@ export default class Analyze extends React.Component {
           onPress={() => {
             this.submitToGoogle();
             googleResArr.splice(0, googleResArr.length);
+            this.props.navigation.push("Match");
           }}
           title="Analyze!"
         />
@@ -255,6 +255,8 @@ async function uploadImageAsync(uri) {
 
   return await snapshot.ref.getDownloadURL();
 }
+
+export default withNavigation(Analyze);
 
 const styles = StyleSheet.create({
   container: {

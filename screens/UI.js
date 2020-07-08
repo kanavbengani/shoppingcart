@@ -13,18 +13,19 @@ import {
     Keyboard,
     TouchableOpacity
 } from "react-native";
-import { Header } from "react-native/Libraries/NewAppScreen";
 import TodoItem from "../components/todoItem";
 import AddTodo from "../components/addTodo";
-import googleResArr from './Analyze';
-// import { TouchableOpacity } from "react-native-gesture-handler";
 
 const screenWidth = Math.round(Dimensions.get("window").width);
 const screenHeight = Math.round(Dimensions.get("window").height);
 
 var googleResponse = require('./Analyze').googleResArr;
 var todoArr = [];
+exports.todoArr = todoArr;
+
+
 export default function UI({ navigation }) {
+
     const goToAnalyze = () => {
         navigation.push("Analyze");
     };
@@ -75,7 +76,6 @@ export default function UI({ navigation }) {
                         <AddTodo submitHandler={submitHandler} />
                         <View style={styles.list}>
                             <FlatList
-                                // contentContainerStyle={{ flexgrow: 0.7, alignItems: "center" }}
                                 data={todos}
                                 renderItem={({ item }) => (
                                     <TodoItem item={item} pressHandler={pressHandler} />
